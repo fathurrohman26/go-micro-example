@@ -22,6 +22,11 @@ cd gateway
 go run main.go
 ```
 
+# Using Docker
+```sh
+docker compose up
+```
+
 # Testing
 ```sh
 # Get user
