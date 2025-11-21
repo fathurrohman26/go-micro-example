@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  users:
+    build: ./services/users
+    environment:
+      MICRO_REGISTRY: nats
+      MICRO_REGISTRY_ADDRESS: nats://nats:4222
+    depends_on:
+      - nats
+
+  products:
+    build: ./services/products
+    environment:
+      MICRO_REGISTRY: nats
+      MICRO_REGISTRY_ADDRESS: nats://nats:4222
+    depends_on:
+      - nats
+
+  orders:
+    build: ./services/orders
+    environment:
+      MICRO_REGISTRY: nats
+      MICRO_REGISTRY_ADDRESS: nats://nats:4222
+    depends_on:
+      - nats
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8080:8080"
+    environment:
+      MICRO_REGISTRY: nats
+      MICRO_REGISTRY_ADDRESS: nats://nats:4222
+    depends_on:
+      - users
+      - products
+      - orders
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
